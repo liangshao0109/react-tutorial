@@ -49,3 +49,11 @@ button {
 .selected {
   background-color:lemonchiffon;
 }
+
+.schedule-btn{
+  float: right;
+}
+
+.schedule-title{
+  margin-left: 10px;
+}
