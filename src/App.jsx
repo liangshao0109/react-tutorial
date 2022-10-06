@@ -5,9 +5,16 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import Banner from './components/Banner';
 import TermPage from './components/TermPage';
+import CourseEdit from './components/CourseEdit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch';
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
+const CourseFormForUrl = ({courses}) => {
+  const { id } = useParams();
+
+  return <CourseEdit id={id} data={courses[id]} />;
+};
 
 const Main = () => {
   const [data, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
@@ -17,9 +24,18 @@ const Main = () => {
   if (!data) return <h1>No course data found</h1>;
 
   return (
-    <div>
-      <Banner title={data.title} />
-      <TermPage courses={data.courses} />
+    <div>   
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={
+            <div>
+              <Banner title={data.title} />
+              <TermPage courses={data.courses} />
+            </div>
+          } />
+          <Route path="/courses/:id/edit" element={<CourseFormForUrl courses={data.courses}/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
