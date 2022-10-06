@@ -57,3 +57,7 @@ button {
 .schedule-title{
   margin-left: 10px;
 }
+
+.disabled{
+  background-color:crimson;
+}
