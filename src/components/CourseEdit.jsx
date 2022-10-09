@@ -1,4 +1,5 @@
 import { useFormData } from '../utilities/useFormData';
+import { useDbUpdate } from '../utilities/firebase';
 
 const InputField = ({name, text, state, change}) => (
   <div className="mb-3">
@@ -25,23 +26,28 @@ const ButtonBar = ({message, disabled}) => {
     return (
         <div className="d-flex">
         <button type="button" className="btn btn-outline-dark me-2" onClick={() => window.location.href = "/"}>Cancel</button>
+        <button type="submit" className="btn btn-primary me-auto" disabled={disabled}>Submit</button>
         <span className="p-2">{message}</span>
         </div>
     );
 };
 
-const CourseEdit = ({data}) => {
+const CourseEdit = ({data, id}) => {
     const [state, change] = useFormData(validateCourseData, data);
+    const [update, result] = useDbUpdate(`/courses/${id}`);
 
     const submit = (evt) => {
         evt.preventDefault();
+        if (!state.errors) {
+            update(state.values);
+        }
     };
 
     return (
         <form onSubmit={submit} noValidate className={state.errors ? 'was-validated' : null}>
         <InputField name="title" text="Title" state={state} change={change}/>
         <InputField name="meets" text="Meeting Time" state={state} change={change}/>
-        <ButtonBar />
+        <ButtonBar message={result?.message} />
         </form>
     )
 };
