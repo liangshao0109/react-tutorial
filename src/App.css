@@ -50,7 +50,7 @@ button {
   background-color:lemonchiffon;
 }
 
-.schedule-btn{
+.schedule-btn, .auth-btn{
   float: right;
 }
 
