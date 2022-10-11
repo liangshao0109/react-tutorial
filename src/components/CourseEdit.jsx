@@ -34,7 +34,7 @@ const ButtonBar = ({message, disabled}) => {
 
 const CourseEdit = ({data, id}) => {
     const [state, change] = useFormData(validateCourseData, data);
-    const [update, result] = useDbUpdate(`/courses/${id}`);
+    const [update, result] = useDbUpdate(`/data/courses/${id}`);
 
     const submit = (evt) => {
         evt.preventDefault();

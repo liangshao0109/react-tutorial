@@ -28,7 +28,7 @@ const TermSelector = ({selection, setSelection}) => (
 );
 
 
-const TermPage = ({courses}) => {
+const TermPage = ({courses, profile}) => {
     const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
     const [selected, setSelected] = useState([]);
     const [disabled, setDisabled] = useState([]);
@@ -36,7 +36,6 @@ const TermPage = ({courses}) => {
 
     const openModal = () => setOpen(true);
     const closeModal = () => setOpen(false);
-
 
     const dateConflict = (course1, course2) => {
         course1 = splitMeets(course1);
@@ -98,7 +97,7 @@ const TermPage = ({courses}) => {
             <Modal open={open} close={closeModal}>
                 <Cart selected={selected} />
             </Modal>
-            <CourseList courses={filteredCourse} selected={selected} toggleSelected={toggleSelected} disabled={disabled}/>
+            <CourseList courses={filteredCourse} selected={selected} toggleSelected={toggleSelected} disabled={disabled} isAdmin={profile.isAdmin}/>
         </div>
     )
 };
